@@ -1,0 +1,9 @@
+What's left? Most of it.
+
+Basic requirements:
+- coverage of all units of mass, length, area, volume
+- conversion between all related units
+- metric and imperial support, possibly with rational number support for imperial
+- a clean way of distinguishing between US and UK units of the same name
+
+After that, I suppose there's all sorts of further units to cover.
