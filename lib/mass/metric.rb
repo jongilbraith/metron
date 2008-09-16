@@ -33,27 +33,31 @@ class MetricMass
   end
   
   def to_mg
-    MetricMass.new(self.amount * factor(self.units, :mg), :mg)
+    self.convert_to(:mg)
   end
 
   def to_dg
-    MetricMass.new(self.amount * factor(self.units, :dg), :dg)
+    self.convert_to(:dg)
   end
 
   def to_g
-    MetricMass.new(self.amount * factor(self.units, :g), :g)
+    self.convert_to(:g)
   end
 
   def to_kg
-    MetricMass.new(self.amount * factor(self.units, :kg), :kg)
+    self.convert_to(:kg)
   end
 
   def to_tonne
-    MetricMass.new(self.amount * factor(self.units, :tonne), :tonne)
+    self.convert_to(:tonne)
   end
   
   def to_f
     self.amount.to_f
+  end
+  
+  def convert_to(new_units)
+    MetricMass.new(self.amount * factor(self.units, new_units.to_sym), new_units.to_sym)
   end
   
   def to_s(form = nil)
