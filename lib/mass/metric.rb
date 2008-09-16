@@ -1,4 +1,5 @@
 require 'active_support/inflector'
+require 'bigdecimal'
 class MetricMass
 
   include Metron::Support
@@ -28,7 +29,7 @@ class MetricMass
   attr_accessor :units
   
   def initialize(amount, units)
-    @amount = amount
+    @amount = BigDecimal.new(amount.to_s)
     @units = units
   end
   
