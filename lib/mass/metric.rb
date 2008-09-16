@@ -1,5 +1,3 @@
-require 'active_support/inflector'
-require 'bigdecimal'
 class MetricMass
 
   include Metron::Support

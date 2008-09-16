@@ -1,7 +1,6 @@
+require File.join(File.dirname(__FILE__), "..", "init")
 require 'test/unit'
-require 'rubygems'
 require 'shoulda'
-require File.join(File.dirname(__FILE__), "..", "lib", "metron")
 
 class MassTest < Test::Unit::TestCase
   
