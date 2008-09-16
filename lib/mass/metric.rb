@@ -33,6 +33,11 @@ class MetricMass
     @units = units
   end
   
+  def ==(new_mass)
+    # For comparison we need to have both values at the same level of accuracy, so we bring the smaller units up to that of the larger for comparison
+    FACTORS[self.units] < FACTORS[new_mass.units] ? self.convert_to(new_mass.units).amount == new_mass.amount : self.amount == new_mass.convert_to(self.units).amount
+  end
+  
   def to_mg
     self.convert_to(:mg)
   end
