@@ -28,7 +28,7 @@ class MetricMass
   
   def initialize(amount, units)
     @amount = BigDecimal.new(amount.to_s)
-    @units = units
+    @units = units.to_sym
   end
   
   def ==(new_mass)
@@ -61,7 +61,7 @@ class MetricMass
   end
   
   def convert_to(new_units)
-    MetricMass.new(self.amount * factor(self.units, new_units.to_sym), new_units.to_sym)
+    MetricMass.new(self.amount * factor(self.units, new_units), new_units)
   end
   
   def to_s(form = nil)
