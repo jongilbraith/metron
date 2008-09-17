@@ -35,6 +35,23 @@ class MetricMass
     # For comparison we need to have both values at the same level of accuracy, so we bring the smaller units up to that of the larger for comparison
     FACTORS[self.units] < FACTORS[new_mass.units] ? self.convert_to(new_mass.units).amount == new_mass.amount : self.amount == new_mass.convert_to(self.units).amount
   end
+
+  # For all arithmetic, we work on the rule of taking on the units of the first mass
+  def *(other_mass)
+    MetricMass.new(self.amount * other_mass.convert_to(self.units).amount, self.units)
+  end
+
+  def /(other_mass)
+    self.amount / other_mass.convert_to(self.units).amount
+  end
+
+  def +(other_mass)
+    MetricMass.new(self.amount + other_mass.convert_to(self.units).amount, self.units)
+  end
+
+  def -(other_mass)
+    MetricMass.new(self.amount - other_mass.convert_to(self.units).amount, self.units)
+  end
   
   def to_mg
     self.convert_to(:mg)
