@@ -1,6 +1,7 @@
 class MetricMass
 
   include Metron::Support
+  include Comparable
 
   FACTORS = { :mg => -3,
               :dg => -1,
@@ -31,11 +32,11 @@ class MetricMass
     @units = units.to_sym
   end
   
-  def ==(new_mass)
-    # For comparison we need to have both values at the same level of accuracy, so we bring the smaller units up to that of the larger for comparison
-    FACTORS[self.units] < FACTORS[new_mass.units] ? self.convert_to(new_mass.units).amount == new_mass.amount : self.amount == new_mass.convert_to(self.units).amount
+  # For comparison we need to have both values at the same level of accuracy, so we bring the smaller units up to that of the larger for comparison
+  def <=>(other_mass)
+    FACTORS[self.units] < FACTORS[other_mass.units] ? self.convert_to(other_mass.units).amount <=> other_mass.amount : self.amount <=> other_mass.convert_to(self.units).amount
   end
-
+  
   # For all arithmetic, we work on the rule of taking on the units of the first mass
   def *(other_mass)
     MetricMass.new(self.amount * other_mass.convert_to(self.units).amount, self.units)

@@ -24,9 +24,21 @@ class MassTest < Test::Unit::TestCase
           assert_equal MetricMass.new(100, :g) / MetricMass.new(10, :g), 10
         end
 
+        should "recognise if the first is bigger than the second" do
+          assert MetricMass.new(100, :g) > MetricMass.new(10, :g)
+        end
+
+        should "recognise if the first is smaller than the second" do
+          assert MetricMass.new(100, :g) < MetricMass.new(101, :g)
+        end
+
+        should "recognise if the first equal to the second" do
+          assert MetricMass.new(100, :g) == MetricMass.new(100, :g)
+        end
+
       end
 
-      context "with another mass of the different units" do
+      context "with another mass of different units" do
 
         should "perform multiplication returning results in the units of the first mass" do
           assert_equal MetricMass.new(1000, :g) * MetricMass.new(1, :kg), MetricMass.new(1000000, :g)
@@ -44,6 +56,18 @@ class MassTest < Test::Unit::TestCase
           assert_equal MetricMass.new(10, :kg) / MetricMass.new(1000, :g), 10
         end
 
+        should "recognise if the first is bigger than the second" do
+          assert MetricMass.new(1001, :g) > MetricMass.new(1, :kg)
+        end
+
+        should "recognise if the first is smaller than the second" do
+          assert MetricMass.new(1, :kg) < MetricMass.new(1001, :g)
+        end
+
+        should "recognise if the first equal to the second" do
+          assert MetricMass.new(1000, :g) == MetricMass.new(1, :kg)
+        end
+        
       end
 
     end
