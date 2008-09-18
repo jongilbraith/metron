@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), "..", "init")
 require 'test/unit'
 require 'shoulda'
 
-class MassTest < Test::Unit::TestCase
+class MetricMassTest < Test::Unit::TestCase
   
   context "A mass" do
 
