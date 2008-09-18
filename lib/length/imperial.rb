@@ -28,6 +28,23 @@ class ImperialLength
   def <=>(other_length)
     FACTORS[self.units] < FACTORS[other_length.units] ? self.convert_to(other_length.units).amount <=> other_length.amount : self.amount <=> other_length.convert_to(self.units).amount
   end
+  
+  # For all arithmetic, we work on the rule of taking on the units of the first mass
+  def *(other_length)
+    ImperialLength.new(self.amount * other_length.convert_to(self.units).amount, self.units)
+  end
+
+  def /(other_length)
+    self.amount / other_length.convert_to(self.units).amount
+  end
+
+  def +(other_length)
+    ImperialLength.new(self.amount + other_length.convert_to(self.units).amount, self.units)
+  end
+
+  def -(other_length)
+    ImperialLength.new(self.amount - other_length.convert_to(self.units).amount, self.units)
+  end
 
   def to_thou
     self.convert_to(:thou)
