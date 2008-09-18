@@ -58,7 +58,12 @@ class ImperialLength
   end
 
   def convert_to(new_units)
-    ImperialLength.new(self.amount * FACTORS[self.units], new_units)
+    ImperialLength.new(self.amount * factor(self.units, new_units), new_units)
   end
   
+  private
+    def factor(from, to)
+      FACTORS[from.to_sym] / FACTORS[to.to_sym]
+    end
+    
 end
