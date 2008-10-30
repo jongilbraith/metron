@@ -39,20 +39,20 @@ class MetricMass
   
   # For all arithmetic, we work on the rule of taking on the units of the first mass
   def *(fixnum)
-    self.new(self.amount * BigDecimal.new(fixnum.to_s), self.units)
+    self.class.new(self.amount * BigDecimal.new(fixnum.to_s), self.units)
   end
 
   # If passed a mass, the result is a fixnum, if passed a fixnum, the result is a mass
   def /(value)
-    value.respond_to?(:amount) ? (self.amount / value.convert_to(self.units).amount).to_f : self.new((self.amount / BigDecimal.new(value.to_s)), self.units)
+    value.respond_to?(:amount) ? (self.amount / value.convert_to(self.units).amount).to_f : self.class.new((self.amount / BigDecimal.new(value.to_s)), self.units)
   end
 
   def +(other_mass)
-    self.new(self.amount + other_mass.convert_to(self.units).amount, self.units)
+    self.class.new(self.amount + other_mass.convert_to(self.units).amount, self.units)
   end
 
   def -(other_mass)
-    self.new(self.amount - other_mass.convert_to(self.units).amount, self.units)
+    self.class.new(self.amount - other_mass.convert_to(self.units).amount, self.units)
   end
   
   def to_mg
@@ -76,7 +76,7 @@ class MetricMass
   end
   
   def convert_to(new_units)
-    self.new(self.amount * factor(self.units, new_units), new_units)
+    self.class.new(self.amount * factor(self.units, new_units), new_units)
   end
   
   def to_f
