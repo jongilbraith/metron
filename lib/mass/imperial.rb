@@ -48,6 +48,23 @@ class ImperialMass
     FACTORS[self.units] < FACTORS[other_mass.units] ? self.convert_to(other_mass.units).amount <=> other_mass.amount : self.amount <=> other_mass.convert_to(self.units).amount
   end
   
+  # For all arithmetic, we work on the rule of taking on the units of the first mass
+  def *(value)
+    value.respond_to?(:amount) ? ImperialMass.new(self.amount * value.convert_to(self.units).amount, self.units) : ImperialMass.new(self.amount * value.to_f, self.units)
+  end
+
+  def /(value)
+    value.respond_to?(:amount) ? self.amount / value.convert_to(self.units).amount : self.amount / value.to_f
+  end
+
+  def +(other_mass)
+    ImperialMass.new(self.amount + other_mass.convert_to(self.units).amount, self.units)
+  end
+
+  def -(other_mass)
+    ImperialMass.new(self.amount - other_mass.convert_to(self.units).amount, self.units)
+  end
+  
   def to_grain
     self.convert_to(:grain)
   end
