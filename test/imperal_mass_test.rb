@@ -5,69 +5,94 @@ require 'shoulda'
 class ImperialMassTest < Test::Unit::TestCase
   
   context "A mass" do
+    
+    context "and another metric mass of the same units" do
+      
+      context "when compared" do
 
-      context "with another mass of the same units" do
-
-        should "perform multiplication" do
-          assert ImperialMass.new(4, :stone) + ImperialMass.new(2, :stone), 2.0
-        end
-
-        should "perform addition" do
-          assert ImperialMass.new(2, :stone) + ImperialMass.new(2, :stone), ImperialMass.new(4, :stone)
-        end
-
-        should "perform subtraction" do
-          assert ImperialMass.new(5, :stone) - ImperialMass.new(1, :stone), ImperialMass.new(4, :stone)
-        end
-
-        should "perform division and return a fixnum" do
-          assert ImperialMass.new(1, :stone) / ImperialMass.new(1, :stone), 14.0
-        end
-
-        should "recognise if the first is bigger than the second" do
+        should "return true if the first is larger than the second" do
           assert ImperialMass.new(15, :pound) > ImperialMass.new(14, :pound)
         end
 
-        should "recognise if the first is smaller than the second" do
+        should "return true if the first is smaller than the second" do
           assert ImperialMass.new(13, :pound) < ImperialMass.new(14, :pound)
         end
 
-        should "recognise if the first equal to the second" do
+        should "return true if the first is equal to the second" do
           assert ImperialMass.new(14, :pound) == ImperialMass.new(14, :pound)
+        end
+      end
+
+      context "when added" do
+        should "should return the correct amount in the units of the first argument" do
+          assert ImperialMass.new(2, :stone) + ImperialMass.new(2, :stone), ImperialMass.new(4, :stone)
+        end
+      end
+
+      context "when subtracted" do
+        should "should return the correct amount in the units of the first argument" do
+          assert ImperialMass.new(5, :stone) - ImperialMass.new(1, :stone), ImperialMass.new(4, :stone)
+        end
+      end
+
+      context "when divided" do
+        should "should return the correct value as a fixnum" do
+          assert ImperialMass.new(14, :pound) / ImperialMass.new(2, :pound), 7
+        end
+      end
+
+    end
+
+    context "and another imperial length of the different units" do
+
+      context "when compared" do
+
+        should "return true if the first is larger than the second" do
+          assert ImperialMass.new(1, :stone) > ImperialMass.new(13, :pound)
+        end
+
+        should "return true if the first is smaller than the second" do
+          assert ImperialMass.new(1, :stone) < ImperialMass.new(15, :pound)
+        end
+
+        should "return true if the first is equal than the second" do
+          assert ImperialMass.new(1, :stone) == ImperialMass.new(14, :pound)
         end
 
       end
 
-      context "with another mass of different units" do
-
-        should "perform multiplication returning results in the units of the first mass" do
-          assert_equal ImperialMass.new(1, :stone) * 5, ImperialMass.new(5, :stone)
-        end
-
-        should "perform addition returning results in the units of the first mass" do
+      context "when added" do
+        should "should return the correct amount in the units of the first argument" do
           assert_equal ImperialMass.new(1, :stone) + ImperialMass.new(14, :pound), ImperialMass.new(2, :stone)
         end
+      end
 
-        should "perform subtraction returning results in the units of the first mass" do
+      context "when subtracted" do
+        should "should return the correct amount in the units of the first argument" do
           assert_equal ImperialMass.new(2, :stone) - ImperialMass.new(14, :pound), ImperialMass.new(1, :stone)
         end
+      end
 
-        should "perform division and return a fixnum" do
-          assert_equal ImperialMass.new(1, :stone) / ImperialMass.new(1, :pound), 14.0
+      context "when divided" do
+        should "should return the correct value as a fixnum" do
+          assert_equal ImperialMass.new(10, :kg) / MetricMass.new(1000, :g), 10
         end
+      end
 
-        should "recognise if the first is bigger than the second" do
-          assert ImperialMass.new(1, :stone) > ImperialMass.new(13, :pound)
-        end
+    end
 
-        should "recognise if the first is smaller than the second" do
-          assert ImperialMass.new(1, :stone) < ImperialMass.new(15, :pound)
-        end
+    context "and a fixnum" do
 
-        should "recognise if the first equal to the second" do
-          assert ImperialMass.new(1, :stone) == ImperialMass.new(14, :pound)
+      context "when multiplied" do
+        should "should return the correct value as a Metric mass" do
+          assert_equal ImperialMass.new(12.5, :stone) * 2, ImperialMass.new(25, :stone)
         end
-        
+      end
+
+      context "when divided" do
+        should "should return the correct value as a Metric Mass" do
+          assert_equal ImperialMass.new(1, :stone) / 2, ImperialMass.new(0.5, :stone)
+        end
       end
 
     end
@@ -103,5 +128,7 @@ class ImperialMassTest < Test::Unit::TestCase
     should "convert to ton" do
       assert_equal ImperialMass.new(78848, :ounce).to_ton, ImperialMass.new(2.2, :ton)
     end
+    
+  end
   
 end

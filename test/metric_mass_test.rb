@@ -4,74 +4,99 @@ require 'shoulda'
 
 class MetricMassTest < Test::Unit::TestCase
   
-  context "A mass" do
+  context "A metric mass" do
 
-      context "with another mass of the same units" do
+    context "and another metric mass of the same units" do
+      
+      context "when compared" do
 
-        should "perform multiplication" do
-          assert_equal MetricMass.new(10, :g) * MetricMass.new(10, :g), MetricMass.new(100, :g)
-        end
-
-        should "perform addition" do
-          assert_equal MetricMass.new(10, :g) + MetricMass.new(10, :g), MetricMass.new(20, :g)
-        end
-
-        should "perform subtraction" do
-          assert_equal MetricMass.new(100, :g) - MetricMass.new(50, :g), MetricMass.new(50, :g)
-        end
-
-        should "perform division and return a fixnum" do
-          assert_equal MetricMass.new(100, :g) / MetricMass.new(10, :g), 10
-        end
-
-        should "recognise if the first is bigger than the second" do
+        should "return true if the first is larger than the second" do
           assert MetricMass.new(100, :g) > MetricMass.new(10, :g)
         end
 
-        should "recognise if the first is smaller than the second" do
+        should "return true if the first is smaller than the second" do
           assert MetricMass.new(100, :g) < MetricMass.new(101, :g)
         end
 
-        should "recognise if the first equal to the second" do
+        should "return true if the first is equal to the second" do
           assert MetricMass.new(100, :g) == MetricMass.new(100, :g)
         end
-
       end
 
-      context "with another mass of different units" do
-
-        should "perform multiplication returning results in the units of the first mass" do
-          assert_equal MetricMass.new(1000, :g) * MetricMass.new(1, :kg), MetricMass.new(1000000, :g)
+      context "when added" do
+        should "should return the correct amount in the units of the first argument" do
+          assert_equal MetricMass.new(10, :g) + MetricMass.new(10, :g), MetricMass.new(20, :g)
         end
+      end
 
-        should "perform addition returning results in the units of the first mass" do
-          assert_equal MetricMass.new(1000, :g) + MetricMass.new(1, :kg), MetricMass.new(2000, :g)
+      context "when subtracted" do
+        should "should return the correct amount in the units of the first argument" do
+          assert_equal MetricMass.new(100, :g) - MetricMass.new(50, :g), MetricMass.new(50, :g)
         end
+      end
 
-        should "perform subtraction returning results in the units of the first mass" do
-          assert_equal MetricMass.new(10, :kg) - MetricMass.new(1000, :g), MetricMass.new(9, :kg)
+      context "when divided" do
+        should "should return the correct number of times that the first length goes into the second as a fixnum" do
+          assert_equal MetricMass.new(100, :g) / MetricMass.new(10, :g), 10
         end
-
-        should "perform division and returning a fixnum" do
-          assert_equal MetricMass.new(10, :kg) / MetricMass.new(1000, :g), 10
-        end
-
-        should "recognise if the first is bigger than the second" do
-          assert MetricMass.new(1001, :g) > MetricMass.new(1, :kg)
-        end
-
-        should "recognise if the first is smaller than the second" do
-          assert MetricMass.new(1, :kg) < MetricMass.new(1001, :g)
-        end
-
-        should "recognise if the first equal to the second" do
-          assert MetricMass.new(1000, :g) == MetricMass.new(1, :kg)
-        end
-        
       end
 
     end
-    
+
+    context "and another imperial length of the different units" do
+
+      context "when compared" do
+
+        should "return true if the first is larger than the second" do
+          assert MetricMass.new(1001, :g) > MetricMass.new(1, :kg)
+        end
+
+        should "return true if the first is smaller than the second" do
+          assert MetricMass.new(1, :kg) < MetricMass.new(1001, :g)
+        end
+
+        should "return true if the first is equal than the second" do
+          assert MetricMass.new(1000, :g) == MetricMass.new(1, :kg)
+        end
+
+      end
+
+      context "when added" do
+        should "should return the correct amount in the units of the first argument" do
+          assert_equal MetricMass.new(1000, :g) + MetricMass.new(1, :kg), MetricMass.new(2000, :g)
+        end
+      end
+
+      context "when subtracted" do
+        should "should return the correct amount in the units of the first argument" do
+          assert_equal MetricMass.new(10, :kg) - MetricMass.new(1000, :g), MetricMass.new(9, :kg)
+        end
+      end
+
+      context "when divided" do
+        should "should return the correct number of times that the first length goes into the second as a fixnum" do
+          assert_equal MetricMass.new(10, :kg) / MetricMass.new(1000, :g), 10
+        end
+      end
+
+    end
+
+    context "and a fixnum" do
+
+      context "when multiplied" do
+        should "should return the correct value as a Metric mass" do
+          assert_equal MetricMass.new(12.5, :kg) * 2, MetricMass.new(25, :kg)
+        end
+      end
+
+      context "when divided" do
+        should "should return the correct value as an Imperial Mass" do
+          assert_equal MetricMass.new(22, :kg) / 2, MetricMass.new(11, :kg)
+        end
+      end
+
+    end
+      
     should "convert to mg" do
       assert_equal MetricMass.new(1.3, :kg).to_mg, MetricMass.new(1300000, :mg)
     end
@@ -91,5 +116,7 @@ class MetricMassTest < Test::Unit::TestCase
     should "convert to tonne" do
       assert_equal MetricMass.new(3506, :kg).to_tonne, MetricMass.new(3.506, :tonne)
     end
+
+  end
   
 end
