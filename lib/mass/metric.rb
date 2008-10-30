@@ -38,12 +38,12 @@ class MetricMass
   end
   
   # For all arithmetic, we work on the rule of taking on the units of the first mass
-  def *(other_mass)
-    MetricMass.new(self.amount * other_mass.convert_to(self.units).amount, self.units)
+  def *(value)
+    value.respond_to?(:amount) ? MetricMass.new(self.amount * value.convert_to(self.units).amount, self.units) : MetricMass.new(self.amount * value.to_f, self.units)
   end
 
-  def /(other_mass)
-    self.amount / other_mass.convert_to(self.units).amount
+  def /(value)
+    value.respond_to?(:amount) ? self.amount / value.convert_to(self.units).amount : self.amount / value.to_f
   end
 
   def +(other_mass)
@@ -74,12 +74,12 @@ class MetricMass
     self.convert_to(:tonne)
   end
   
-  def to_f
-    self.amount.to_f
-  end
-  
   def convert_to(new_units)
     MetricMass.new(self.amount * factor(self.units, new_units), new_units)
+  end
+  
+  def to_f
+    self.amount.to_f
   end
   
   def to_s(form = nil)
@@ -90,6 +90,19 @@ class MetricMass
     end
   end
   
+  # Conversion source http://en.wikipedia.org/wiki/Imperial_unit#Measures_of_weight_and_mass
+  def in_imperial
+    ImperialMass.new(self.to_g / BigDecimal.new("453.59237"), :pound)
+  end
+  
+  def imperial?
+    false
+  end
+  
+  def metric?
+    true
+  end
+
   private
     def factor(from, to)
       10 ** (FACTORS[from.to_sym] - FACTORS[to.to_sym])
