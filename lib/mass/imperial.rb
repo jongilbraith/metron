@@ -97,12 +97,20 @@ class ImperialMass
     self.convert_to(:ton)
   end
   
+  def convert_to(new_units)
+    ImperialMass.new(self.amount * factor(self.units, new_units), new_units)
+  end
+
   def to_f
     self.amount.to_f
   end
   
-  def convert_to(new_units)
-    ImperialMass.new(self.amount * factor(self.units, new_units), new_units)
+  def to_s(form = nil)
+    if !form.nil? && form.to_sym == :name
+      pluralize(self.amount, NAMES[self.units.to_sym])
+    else
+      "#{self.amount.to_f} #{SYMBOLS[self.units.to_sym]}"
+    end
   end
   
   private
