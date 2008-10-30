@@ -116,7 +116,7 @@ class ImperialMass
   
   # Conversion source http://en.wikipedia.org/wiki/Imperial_unit#Measures_of_weight_and_mass
   def in_metric
-    MetricMass.new(self.to_pound * BigDecimal.new("453.59237"), :g)
+    MetricMass.new((self.to_pound * 453.59237), :g)
   end
   
   def imperial?

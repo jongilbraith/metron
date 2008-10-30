@@ -129,6 +129,10 @@ class ImperialMassTest < Test::Unit::TestCase
       assert_equal ImperialMass.new(78848, :ounce).to_ton, ImperialMass.new(2.2, :ton)
     end
     
+    should "convert to metric" do
+      assert_equal ImperialMass.new(50, :pound).in_metric, MetricMass.new(22679.6185, :g)
+    end
+    
   end
   
 end
