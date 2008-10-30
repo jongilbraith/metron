@@ -30,12 +30,13 @@ class ImperialLength
   end
   
   # For all arithmetic, we work on the rule of taking on the units of the first mass
-  def *(other_length)
-    ImperialLength.new(self.amount * other_length.convert_to(self.units).amount, self.units)
+  def *(fixnum)
+    ImperialLength.new(self.amount * BigDecimal.new(fixnum.to_s), self.units)
   end
 
-  def /(other_length)
-    self.amount / other_length.convert_to(self.units).amount
+  # If passed a mass, the result is a fixnum, if passed a fixnum, the result is a mass
+  def /(value)
+    value.respond_to?(:amount) ? (self.amount / value.convert_to(self.units).amount).to_f : ImperialLength.new((self.amount / BigDecimal.new(value.to_s)), self.units)
   end
 
   def +(other_length)

@@ -49,12 +49,13 @@ class ImperialMass
   end
   
   # For all arithmetic, we work on the rule of taking on the units of the first mass
-  def *(value)
-    value.respond_to?(:amount) ? ImperialMass.new(self.amount * value.convert_to(self.units).amount, self.units) : ImperialMass.new(self.amount * value.to_f, self.units)
+  def *(fixnum)
+    ImperialMass.new(self.amount * BigDecimal.new(fixnum.to_s), self.units)
   end
 
+  # If passed a mass, the result is a fixnum, if passed a fixnum, the result is a mass
   def /(value)
-    value.respond_to?(:amount) ? self.amount / value.convert_to(self.units).amount : self.amount / value.to_f
+    value.respond_to?(:amount) ? (self.amount / value.convert_to(self.units).amount).to_f : ImperialMass.new((self.amount / BigDecimal.new(value.to_s)), self.units)
   end
 
   def +(other_mass)
@@ -111,6 +112,19 @@ class ImperialMass
     else
       "#{self.amount.to_f} #{SYMBOLS[self.units.to_sym]}"
     end
+  end
+  
+  # Conversion source http://en.wikipedia.org/wiki/Imperial_unit#Measures_of_weight_and_mass
+  def in_metric
+    MetricMass.new(self.to_pound * BigDecimal.new("453.59237"), :g)
+  end
+  
+  def imperial?
+    true
+  end
+  
+  def metric?
+    false
   end
   
   private
