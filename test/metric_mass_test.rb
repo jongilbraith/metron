@@ -36,14 +36,14 @@ class MetricMassTest < Test::Unit::TestCase
       end
 
       context "when divided" do
-        should "should return the correct number of times that the first length goes into the second as a fixnum" do
+        should "should return the correct number of times that the first mass goes into the second as a fixnum" do
           assert_equal MetricMass.new(100, :g) / MetricMass.new(10, :g), 10
         end
       end
 
     end
 
-    context "and another imperial length of the different units" do
+    context "and another imperial mass of the different units" do
 
       context "when compared" do
 
@@ -74,7 +74,7 @@ class MetricMassTest < Test::Unit::TestCase
       end
 
       context "when divided" do
-        should "should return the correct number of times that the first length goes into the second as a fixnum" do
+        should "should return the correct number of times that the first mass goes into the second as a fixnum" do
           assert_equal MetricMass.new(10, :kg) / MetricMass.new(1000, :g), 10
         end
       end

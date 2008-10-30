@@ -43,7 +43,7 @@ class ImperialMassTest < Test::Unit::TestCase
 
     end
 
-    context "and another imperial length of the different units" do
+    context "and another imperial mass of the different units" do
 
       context "when compared" do
 
