@@ -89,17 +89,17 @@ class Mass
   end
   
   def to_s(format = :short)
-    if format == :name
-      if self.metric?
-        pluralize(self.amount, METRIC_NAMES[self.units.to_sym].capitalize)
-      elsif self.imperial?
-        pluralize(self.amount, IMPERIAL_NAMES[self.units.to_sym].capitalize)
-      end
-    elsif format == :long
+    if format == :short
       if self.metric?
         "#{self.amount.to_f} #{METRIC_SYMBOLS[self.units.to_sym]}"
       elsif self.imperial?
         "#{self.amount.to_f} #{IMPERIAL_SYMBOLS[self.units.to_sym]}"
+      end
+    elsif format == :long
+      if self.metric?
+        pluralize(self.amount, METRIC_NAMES[self.units.to_sym].capitalize)
+      elsif self.imperial?
+        pluralize(self.amount, IMPERIAL_NAMES[self.units.to_sym].capitalize)
       end
     end
   end
