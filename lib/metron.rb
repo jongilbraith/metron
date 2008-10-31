@@ -1,4 +1,3 @@
-require File.dirname(__FILE__) + '/support'
-require File.dirname(__FILE__) + '/mass/metric'
-require File.dirname(__FILE__) + '/mass/imperial'
-require File.dirname(__FILE__) + '/length/imperial'
+require File.dirname(__FILE__) + '/metron/support'
+require File.dirname(__FILE__) + '/metron/mass'
+require File.dirname(__FILE__) + '/metron/length'
